@@ -3,7 +3,7 @@ import type { ThemeOptions } from "vuepress-theme-celesta"
 import { translations } from "./translations"
 
 const config: UserConfig<ThemeOptions> = {
-  title: "Celeste's blog",
+  title: "TTF's blog",
   description: "Technique && Life",
 
   lang: "zh-CN",
