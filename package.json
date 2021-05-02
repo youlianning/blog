@@ -1,0 +1,28 @@
+{
+  "name": "blog",
+  "author": "Celeste <yuan.zx@outlook.com>",
+  "homepage": "https://nsznsznjsz.github.io/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nsznsznjsz/blog/"
+  },
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "lerna run build",
+    "test": "jest",
+    "blog:build": "vuepress build posts --clean-cache",
+    "blog:clean": "rimraf posts/.vuepress/.temp posts/.vuepress/.cache posts/.vuepress/dist",
+    "blog:dev": "vuepress dev posts"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "jest": "^26.6.3",
+    "jest-serializer-vue": "^2.0.2",
+    "lerna": "^3.22.1",
+    "ts-jest": "^26.5.2"
+  }
+}

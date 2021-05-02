@@ -1,0 +1,35 @@
+{
+  "name": "vuepress-plugin-post-filter",
+  "version": "1.0.2",
+  "description": "Post filter plugin for vuepress-next",
+  "author": "Celeste <yuan.zx@outlook.com>",
+  "homepage": "https://github.com/nsznsznjsz/blog/tree/master/packages/vuepress-plugin-post-filter#readme",
+  "keywords": [
+    "vuepress-plugin",
+    "vuepress",
+    "plugin",
+    "filter"
+  ],
+  "bugs": {
+    "url": "https://github.com/nsznsznjsz/blog/issues",
+    "email": "yuan.zx@outlook.com"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@vuepress/core": "^2.0.0-alpha.20",
+    "typescript": "^4.1.3"
+  }
+}

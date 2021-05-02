@@ -1,0 +1,17 @@
+# Node modules
+node_modules
+
+# VuePress files
+dist/
+.cache/
+.temp/
+
+# MacOS Desktop Services Store
+.DS_Store
+
+# Local files
+lib/
+coverage/
+todos.md
+*.log
+*.tsbuildinfo

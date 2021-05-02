@@ -1,0 +1,33 @@
+name: Copy README
+on:
+  push:
+    branches:
+      - main
+jobs:
+  # youlianning/youlianning
+  readme-copy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Copy README to new folder
+        run: |
+          mkdir .temp
+          cp README.md .temp/README.md
+
+      - name: Push README to repository youlianning/youlianning
+        uses: cpina/github-action-push-to-another-repository@v1.2
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: .temp
+          destination-github-username: youlianning
+          destination-repository-name: youlianning
+          target-branch: main
+          user-email: yuan.zx@outlook.com
+          commit-message: |
+            Deploy from blog repo, see it for detail
+
+            - repo: github.com/youlianning/blog
+            - commit: github.com/youlianning/blog/commit/${{ github.sha }}
