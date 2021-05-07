@@ -1,6 +1,5 @@
 # wsl + oh my zsh
 
-[TOC]
 
 
 ## 安装zsh
