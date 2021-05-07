@@ -57,6 +57,13 @@ vim ~/.zshrc #进入zsh配置界面
 ZSH_THEME="random" #此处设置随机，使用者可以按照自己的兴趣来设置，切记没有空格
 #保存退出即可
 ```
+此处介绍安装powerlevel10k主题 [参考链接](https://www.jianshu.com/p/7162c4b7a438)
+```
+git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+
+# 然后设置 .zshrc 中的变量 ZSH_THEME
+Set ZSH_THEME=powerlevel10k/powerlevel10k in your ~/.zshrc.
+```
 
 ## wsl字符乱码问题
 
