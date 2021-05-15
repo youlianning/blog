@@ -3,8 +3,8 @@
 - 🌱 I’m currently learning on SHNU
 - 🤔 I’m currently learning English...
 
-![Celeste's github stats](https://github-readme-stats.vercel.app/api/?username=nsznsznjsz&show_icons=true&hide_title=true)
-![Celeste's most used languages](https://github-readme-stats.vercel.app/api/top-langs/?username=nsznsznjsz&layout=compact&exclude_repo=nsznsznjsz.github.io)
+![TTF's github stats](https://github-readme-stats.vercel.app/api/?username=youlianning&show_icons=true&hide_title=true)
+![TTF's most used languages](https://github-readme-stats.vercel.app/api/top-langs/?username=nsznsznjsz&layout=compact&exclude_repo=nsznsznjsz.github.io)
 
 <!--
 **nsznsznjsz/nsznsznjsz** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
