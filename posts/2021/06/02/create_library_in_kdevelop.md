@@ -48,7 +48,7 @@ e[链接]-->f[可执行文件]
 
 示例C++工程如下，包含一个主程序文件和一个库文件
 
-![](/home/youli/blog/posts/2021/06/02/project_structe.png)
+![](./project_structe.png)
 
 main文件里只有一个简单的程序，是用extern调用外部文件（**PS**：之所以写这个文档也是因为在用extern时出了bug才想到构建库文件链接）	
 
