@@ -13,7 +13,7 @@
     "blog:dev": "vuepress dev posts"
   },
   "devDependencies": {
-    "@celesta/vuepress-theme-celesta": "^0.2.1",
+    "@celesta/vuepress-theme-celesta": "^0.2.2",
     "@vuepress/bundler-webpack": "^2.0.0-beta.15",
     "vuepress-vite": "^2.0.0-beta.16"
   }
