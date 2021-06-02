@@ -8,9 +8,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "blog:build": "vuepress build posts --clean-cache",
-    "blog:clean": "rimraf posts/.vuepress/.temp posts/.vuepress/.cache posts/.vuepress/dist",
-    "blog:dev": "vuepress dev posts"
+    "build": "vuepress build posts --clean-cache",
+    "clean": "rimraf posts/.vuepress/.temp posts/.vuepress/.cache posts/.vuepress/dist",
+    "dev": "vuepress dev posts"
   },
   "devDependencies": {
     "@celesta/vuepress-theme-celesta": "^0.2.2",
