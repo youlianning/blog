@@ -7,22 +7,14 @@
     "url": "https://github.com/nsznsznjsz/blog/"
   },
   "license": "MIT",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "build": "lerna run build",
-    "test": "jest",
     "blog:build": "vuepress build posts --clean-cache",
     "blog:clean": "rimraf posts/.vuepress/.temp posts/.vuepress/.cache posts/.vuepress/dist",
     "blog:dev": "vuepress dev posts"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.20",
-    "jest": "^26.6.3",
-    "jest-serializer-vue": "^2.0.2",
-    "lerna": "^3.22.1",
-    "ts-jest": "^26.5.2"
+    "@celesta/vuepress-theme-celesta": "^0.2.1",
+    "@vuepress/bundler-webpack": "^2.0.0-beta.15",
+    "vuepress-vite": "^2.0.0-beta.16"
   }
 }
