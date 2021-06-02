@@ -1,12 +1,12 @@
 {
   "name": "blog",
-  "author": "Celeste <yuan.zx@outlook.com>",
+  "author": "youlianning <youlianning@163.com>",
   "homepage": "https://nsznsznjsz.github.io/",
   "repository": {
     "type": "git",
     "url": "https://github.com/nsznsznjsz/blog/"
   },
-  "license": "MIT",
+  "license": "CC0-1.0",
   "scripts": {
     "build": "vuepress build posts --clean-cache",
     "clean": "rimraf posts/.vuepress/.temp posts/.vuepress/.cache posts/.vuepress/dist",
