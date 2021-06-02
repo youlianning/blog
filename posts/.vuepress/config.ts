@@ -1,4 +1,4 @@
-import { defineUserConfig } from "vuepress-vite"
+import { defineUserConfig } from "vuepress"
 import { translations } from "./translations"
 import type { ThemeOptions } from "@celesta/vuepress-theme-celesta"
 
@@ -15,8 +15,6 @@ export default defineUserConfig<ThemeOptions>({
       lang: "zh-CN",
     },
   },
-
-  bundler: "@vuepress/bundler-webpack",
 
   plugins: [],
 
