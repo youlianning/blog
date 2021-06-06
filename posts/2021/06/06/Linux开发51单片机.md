@@ -1,0 +1,145 @@
+## Linux开发51单片机
+
+## 参考链接
+
+[怎么用 linux 操作系统开发 51 单片机程序 - 鸿则的业余实验室](https://www.bilibili.com/video/BV1bp411d7Mg?from=search&seid=8032133120414251956)
+
+[sdcc](http://sdcc.sourceforge.net/)
+
+[stcflash](https://github.com/laborer/stcflash)
+
+## 准备工具
+
+单片机，USB转TTL, 个人电脑
+
+## 烧写环境搭建
+
+**测试背景：** Linux-Debian
+
+安装SDCC
+
+```shell
+sudo apt install sdcc
+```
+
+下载stcflash, 这是个用python写的向单片机烧写的软件
+
+```shell
+git clone https://github.com/laborer/stcflash ~/Downloads/stcflash  
+unzip stcflash.zip
+cd stcflash-master
+mv stcflash.py stcflash #删除后缀名
+#移动stcflash文件到/usr/local/bin
+vim ~/.zshrc #修改环境变量，此处我用的zsh
+PATH=$PATH:/usr/bin/local
+```
+
+安装串口支持
+
+```shell
+sudo apt install python-serial
+```
+
+打开写好的工程，开始进行编译
+
+```shell
+sdcc main.c -o mian.ihx #注意此处生成为ihx文件，所以需要转换
+packihx main.ihx > main.hex #packihx会在安装sdcc的时候一并安装上
+```
+
+调用stcflash进行烧写
+
+```shell
+#一般来讲，串口好会自动检测
+#如果有多个串口，需要手动指定
+#sudo stcflash main.hex --port /dev/ttyUSB0 --lowbaud 9600 #指定串口和波特率下载
+sudo stcflash main.hex
+```
+
+## SDCC编译期简明使用教程
+
+安装后把SDCC的bin目录添加到path环境 变量使得你能在任何目录下使用SDCC,使用archlinux和debian系统的没有这一步,安装时已经自动配置好了!
+
+对于已经习惯使用Keil C的用户需要注意一下,SDCC的源代码和Keil C有所不同,需要做一点调整才能编译通过.SDCC比较多的使用像8051.h这样的头文件(include/mcs51目录下也有reg51.h这样的头文件).
+
+对于一些非ANSI  C的关键字,SDCC均采用双下滑线开头的方式定义,如__code,__idata,__sbit…对于单片机引脚的定义SDCC采用了  __at关键字和十六进制地址(用户对底层地址信息要弄清楚,不过我觉得__at关键字是一个比较有特色的改进),如下:
+
+| SDCC                     | Keil           |
+| ------------------------ | -------------- |
+| __sbit   _ _at 0x80 P1_1 | sbit in1=P1^0; |
+| __sbit   _ _at 0x80 P1_1 | sbit in2=P1^1; |
+| __sbit   _ _at 0x80 P1_1 | sbit in3=P1^2; |
+
+所以，在使用STC其他的单片机的时候，一定要先修改一下头文件里面的内容格式。然后再把这个头文件放在SDCC库文件的文件夹里，我这里是/usr/share/sdcc/include/mcs51/。
+
+使用sdcc编译后生成的文件路径是你当前命令行的输入路径。编译好后的文件如下
+
+- sourcefile.asm - 程序的汇编文件
+- sourcefile.lst - 程序的列表文件 
+- sourcefile.rst - 被链接器更新的列表文件
+- sourcefile.sym - 由链接器生成的符号清单
+- sourcefile.rel - 由汇编器生成的对象文件，提供给链接器使用
+- sourcefile.map - 被链接器更新的最终存储器映射
+- sourcefile.mem - 内存的使用情况摘要
+- sourcefile.ihx - 用于生成Intel Hex格式文件模块
+
+程序也需要做一定的修改，如下所示
+
+```C
+#include <reg52.h>       	//52系列单片机头文件
+
+sbit LSA = P1^5;  			//LED位选译码地址引脚A
+sbit LSB = P1^6;  			//LED位选译码地址引脚B
+sbit LSC = P1^7;  			//LED位选译码地址引脚C
+int  main(void)			
+{
+	while(1)				//主程序中设置死循环程序，保证周而复始运行
+	{				
+		//使LED灯的总开关三极管Q6导通，+5V加到LED灯组
+		LSA = 0;
+		LSB = 0;
+		LSC = 0;
+		P0 = 0xfe;         	//点亮一个发光二极管
+	}
+}
+```
+
+在sdcc下修改为
+
+```C
+#include <8052.h>       	
+
+#define LSA P1_5  			
+#define LSB P1_6  			
+#define LSC P1_7 
+ 			
+int  main(void)			
+{
+	while(1)				
+	{
+		LSA = 0;
+		LSB = 0;
+		LSC = 0;
+		P0 = 0xfe;
+	}
+}
+```
+
+### 多文件项目
+
+SDCC并不支持同时编译多个源代码文件,所以多文件项目的编译需要分步进行.假如你的项目包含foo1.c foo2.c main.c三个文件,那么编译过程如下:
+
+```shell
+sdcc -c foo1.c
+sdcc -c foo2.c
+sdcc main.c foo1.rel foo2.rel
+```
+
+还可以使用以下方式编译:
+
+```shell
+sdcc -c main.c
+sdcc main.rel foo1.rel foo2.rel
+```
+
+最后处理一下ihx文件就可以了.对于多文件项目最好是写一个makefile文件用make维护或者写一个批处理文件。
