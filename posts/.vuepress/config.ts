@@ -1,8 +1,8 @@
-import type { UserConfig } from "@vuepress/cli"
-import type { ThemeOptions } from "vuepress-theme-celesta"
+import { defineUserConfig } from "vuepress"
 import { translations } from "./translations"
+import type { ThemeOptions } from "@celesta/vuepress-theme-celesta"
 
-const config: UserConfig<ThemeOptions> = {
+export default defineUserConfig<ThemeOptions>({
   title: "TTF's blog",
   description: "Technique && Life",
 
@@ -18,11 +18,9 @@ const config: UserConfig<ThemeOptions> = {
 
   plugins: [],
 
-  theme: "vuepress-theme-celesta",
+  theme: "@celesta/vuepress-theme-celesta",
   themeConfig: {
     repo: "nsznsznjsz/blog",
     translations,
   },
-}
-
-export default config
+})

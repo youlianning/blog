@@ -3,8 +3,8 @@ const colors = require("tailwindcss/colors")
 module.exports = {
   purge: [
     "./posts/**/*.md",
-    "./packages/*/src/**/*.css",
-    "./packages/*/src/**/*.vue",
+    "./node_modules/@celesta/vuepress-theme-celesta/lib/**/*.css",
+    "./node_modules/@celesta/vuepress-theme-celesta/lib/**/*.vue",
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
