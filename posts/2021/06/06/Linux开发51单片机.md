@@ -1,4 +1,4 @@
-## Linux开发51单片机
+# Linux开发51单片机
 
 ## 参考链接
 
@@ -7,6 +7,8 @@
 [sdcc](http://sdcc.sourceforge.net/)
 
 [stcflash](https://github.com/laborer/stcflash)
+
+[stcgal](https://github.com/grigorig/stcgal)
 
 ## 准备工具
 
@@ -22,7 +24,7 @@
 sudo apt install sdcc
 ```
 
-下载stcflash, 这是个用python写的向单片机烧写的软件
+**方法一** 下载stcflash, 这是个用python写的向单片机烧写的软件
 
 ```shell
 git clone https://github.com/laborer/stcflash ~/Downloads/stcflash  
@@ -33,6 +35,8 @@ mv stcflash.py stcflash #删除后缀名
 vim ~/.zshrc #修改环境变量，此处我用的zsh
 PATH=$PATH:/usr/bin/local
 ```
+
+**注意：** stcflash只支持STC89C5xRC, STC89C5xRD+, STC90C5xRC, STC10Fxx, STC11Fxx, STC12Cx052x, STC12C52xx, STC12C56xx, STC12C5Axx系列单片机，因此一定要先看清楚单片机型号。
 
 安装串口支持
 
@@ -55,6 +59,28 @@ packihx main.ihx > main.hex #packihx会在安装sdcc的时候一并安装上
 #sudo stcflash main.hex --port /dev/ttyUSB0 --lowbaud 9600 #指定串口和波特率下载
 sudo stcflash main.hex
 ```
+
+**方法二** 下载stcgal，这个支持stc8的程序烧写
+
+```shell
+pip install stcgal #安装stcgal
+sudo stcgal -P stc8 text1.ihx  #烧写text1.ihx这个程序
+sudo stcgal -P stc8 #查看单片机信息
+```
+
+**关于stcgal的bug**：下载安装stcgal后，实际上可能由于我之前配置了anaconda的原因，所以无法正常使用stcgal这个程序，无法调用/dev/ttyUSB0。没有权限。所以要添加语句`sudo`，但是对于sudo而言，它出于安全考虑，所以会启用它自己的环境变量，从而出现**sudo：stcgal：command not found**这个结果
+
+**解决方案**：
+
+```shell
+whereis stcgal #查找stcgal的执行文件位置
+#--> /home/youli/anaconda3/bin/stcgal
+sudo cp /home/youli/anaconda3/bin/stcgal /usr/local/bin #复制到系统变量文件夹下
+vim ~/.zshrc #修改环境变量，此处我用的zsh
+PATH=$PATH:/usr/bin/local
+```
+
+现在再调用sudo后，就可以正常编译了。网上很多教程是修改sudo的默认文件，有一定风险。
 
 ## SDCC编译期简明使用教程
 
