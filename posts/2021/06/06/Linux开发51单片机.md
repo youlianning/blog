@@ -64,7 +64,7 @@ sudo stcflash main.hex
 
 ```shell
 pip install stcgal #安装stcgal
-sudo stcgal -P stc8 text1.ihx  #烧写text1.ihx这个程序
+sudo stcgal -P stc8 text1.ihx  #烧写text1.ihx这个程序给stc8芯片
 sudo stcgal -P stc8 #查看单片机信息
 ```
 
@@ -161,11 +161,75 @@ sdcc -c foo2.c
 sdcc main.c foo1.rel foo2.rel
 ```
 
-还可以使用以下方式编译:
+最后处理一下ihx文件就可以了.对于多文件项目最好是写一个makefile文件用make维护或者写一个批处理文件。
 
-```shell
-sdcc -c main.c
-sdcc main.rel foo1.rel foo2.rel
+**追更**
+
+之前提到了可以通过写makefile的方法来维护工程文件夹，所以去简单的了解了一下使用方法。
+
+**测试环境**：创建的工程文件有：main.c  delay.c  delay.h
+
+在工程目录下创建一个名为makefile的文件，点开进行编辑，输入如下内容
+
+```makefile
+CC	=sdcc #定义变量CC，变量值为sdcc
+
+main.ihx:main.rel delay.rel 
+	$(CC) main.rel delay.rel #$(CC)算是一种引用，等价于替换为sdcc，整个语句就是sdcc main.rel delay.rel
+							 #整个语句含义为将main.rel, delay.rel链接在一起
+main.rel:main.c delay.h		 #编译main.c文件，对了，delay.h这种头文件也要加进去，不然到时候修改了.h文件，再编译的时候，就不会读进修改内容
+	$(CC) -c main.c
+
+delay.rel:delay.c			 #编译delay.c文件
+	$(CC) -c delay.c
+
+.PHONY:clean				 #创建伪目标，可以防止在Makefile中定义的只执行命令的目标和工作目录下的实际文件出现名字冲突
+clean:						 #可以通过make clean来调用此指令，清除过多的生成文件
+	-rm main.asm main.ihx main.lk main.lst main.map main.mem main.rel main.rst main.sym
+	-rm delay.asm delay.lst delay.rel delay.rst delay.sym
 ```
 
-最后处理一下ihx文件就可以了.对于多文件项目最好是写一个makefile文件用make维护或者写一个批处理文件。
+如果对以上内容不理解，可以了解一些关于gcc的指令。我们这里再介绍一下makefile的文件格式。
+
+```makefile
+target ... : prerequisites ... #目标：参数
+                   
+        command				   #指令
+              
+        ...
+       
+           
+        ...
+       
+```
+
+通过对照观察，我们对整个文件的理解就更进一步了。
+
+然后这里再介绍一下关于makefile中，`all`这个参数的用法。
+
+比如我们要把一个 hello.cpp 文件编译成 hello
+
+```makefile
+all : hello another
+
+hello : hello.cpp
+	g++ -o $@ $<
+
+another : another.cpp
+	g++ -o $@ $<
+
+
+```
+
+直接 make 或 make all 的话会执行 `hello:hello.cpp` 和 `another:another.cpp` 的编译命令 
+
+这是因为在`make`指令后面不加参数的话，会把第一个读到的目标作为默认的执行对象。所以此处make和make all就一样了。
+
+如果没有`all`这个指令，那么就会编译`hello:hello.cpp` 
+
+  make hello 的话只编译 hello.cpp 
+
+  make another 的话只编译 another.cpp
+
+更多的有关makefile的东西呀，我们之后再聊聊，see you！
+
