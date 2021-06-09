@@ -233,3 +233,26 @@ another : another.cpp
 
 更多的有关makefile的东西呀，我们之后再聊聊，see you！
 
+**再次追更**
+
+因为我觉得rm后面跟上一大堆文件太傻了，一点都不好玩，所以换个简便方法。
+
+```shell
+ls -l /bin/sh #查看当前的shell
+```
+
+如果你是debian, 那么你就会见到它指向dash这个东西，那么下面这个方法就无效了（噗）
+
+如果你是bash作为shell，那么进行以下操作就好了
+
+```shell
+#首先查看通配符情况
+shopt extglob
+#开启扩展通配符
+shopt -s extglob
+#关闭扩展通配符
+#shopt -u extglob
+#排除多个文件，删除剩余文件
+rm -rf !(example1.txt|example2.txt)
+```
+
