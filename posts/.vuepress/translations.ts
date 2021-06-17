@@ -8,7 +8,7 @@ export const translations: { [key: string]: string } = {
   Grammar: "语法",
 
   "Front End": "前端",
-  "Browser": "浏览器",
+  Browser: "浏览器",
 
   Life: "日常",
   Coffee: "咖啡",
